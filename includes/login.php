@@ -1,13 +1,13 @@
 <?php
-// Check if form is
+// Check if form is submitted
 if (isset($_POST['login-submit'])) {
     // Connection to database
     require 'connection.php';
-    //
-    $mail = $_POST['mail'];                     // verzonden variabelen invullen
+
+    $mail = $_POST['mail'];
     $password = $_POST['pwd'];
 
-    //check of mail en/of password zijn ingevuld, anders error
+    // Check whether mail and/or password have been submitted, otherwise give an error
     if (empty($mail) || empty($password)) {
         header("Location: ../personeel.php?error=emptyfields");
         exit();

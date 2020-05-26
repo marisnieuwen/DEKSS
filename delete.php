@@ -10,7 +10,7 @@ if (!isset($_SESSION['userId'])) {
 require_once "includes/connection.php";
 
 if (isset($_POST['submit'])) {
-    // Get the reservation from the database result
+    // Get the appointment from the database result
     $query = "SELECT * FROM reserveringssysteem.appointments WHERE id = " . mysqli_escape_string($connection, $_POST['id']);
     $result = mysqli_query($connection, $query) or die ('Error: ' . $query);
 
@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 
 
     // DELETE DATA
-    // Remove the reservation from the database
+    // Remove the appointment from the database
     $query = "DELETE FROM reserveringssysteem.appointments WHERE id = " . mysqli_escape_string($connection, $_POST['id']);
 
     mysqli_query($connection, $query) or die ('Error: ' . mysqli_error($connection));

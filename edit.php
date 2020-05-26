@@ -6,17 +6,17 @@ if (!isset($_SESSION['userId'])) {
     header('Location: personeel.php');
     exit;
 }
-// Maak een array met tijden van 10:00 - 16:30 met stappen van 30 minuten.
+// Make an array with times from 10:00 - 16:30 with 30 min intervals.
 $times = [];
 $time = strtotime('10:00');
 $timeToAdd = 30;
 
 // loop (while of for loop)
 while ($time <= strtotime('16:30')) {
-    // time toevoegen aan times array
+    // add time to times array
     $times[] = date('H:i', $time);
 
-    // time + een half uur optellen
+    // time + add half an hour
     $time += 60 * $timeToAdd;
 }
 //Require database in this file

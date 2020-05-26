@@ -1,17 +1,17 @@
 <?php
 require_once "includes/connection.php";
 
-// Maak een array met tijden van 10:00 - 16:30 met stappen van 30 minuten.
+// Make an array with times from 10:00 - 16:30 with 30 min intervals
 $times = [];
 $time = strtotime('10:00');
 $timeToAdd = 30;
 
-// loop (while of for loop)
+// loop (while or for loop)
 while ($time <= strtotime('16:30')) {
-    // time toevoegen aan times array
+    // add time to time array
     $times[] = date('H:i', $time);
 
-    // time + een half uur optellen
+    // time + add half an hour
     $time += 60 * $timeToAdd;
 }
 
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 if (isset($_GET['date']) && !empty($_GET['date'])) {
     $date = mysqli_escape_string($connection, $_GET['date']);
 
-    // Haal de reserveringen uit de database voor een specifieke datum
+    // Get all appointments from database for specific date
     $query = "SELECT *
               FROM reserveringssysteem.appointments
               WHERE date = '$date'";
@@ -61,22 +61,22 @@ if (isset($_GET['date']) && !empty($_GET['date'])) {
         }
     }
 
-    // Doorloop alle reserveringen en filter alle tijden die gelijk zijn
-    // aan de tijd van een reservering t/m een half uur later.
-    // Zet alle overgebleven tijden in de array $availableTimes.
+    // Go through all appointments and filter all times that are equal
+    // to the time of the reservation up to half an hour later
+    // Put all remaining times in the array $availableTimes
     $availableTimes = [];
 
-    // doorloop alle tijden (van 10:00 - 16:00)
+    // Go through all times (from 10:00 - 16:00)
     foreach ($times as $time) {
         $time = strtotime($time);
         $occurs = false;
-        // controleer de tijd tegen ALLE reserveringen van die dag
+        //check the time against ALL appointments for that day
         foreach ($afspraken as $afspraak) {
             $startTime = strtotime($afspraak['start_time']);
             $endTime = strtotime($afspraak['end_time']);
-            // ALS de tijd van de begintijd tot de eindtijd van
-            // een reservering valt voeg deze tijd ($time) niet
-            // toe aan availableTimes
+            // IF the time falls between the start time and end time
+            // of an appointment, don't add this time ($time)
+            // to availableTimes
             if ($time >= $startTime &&
                 $time < $endTime) {
                 $occurs = true;
